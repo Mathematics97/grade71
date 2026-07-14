@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Expand & Deliver — Grade 7 Algebra Worksheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Nunito:wght@400;600;700;800&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #FFFCF5;
+    --paper-deep: #F5EFDC;
+    --card: #FFFFFF;
+    --line: #E3D9BE;
+    --ink: #26261F;
+    --ink-soft: #5B5647;
+    --green: #2F6F4E;
+    --green-dark: #1D4A32;
+    --green-pale: #E4F0E7;
+    --coral: #F0623B;
+    --yellow: #FFC845;
+    --blue: #3B82C4;
+    --correct: #2F9E5B;
+    --error: #E15252;
+    --radius: 16px;
+    --shadow: 0 4px 0 rgba(38,38,31,0.08), 0 10px 24px rgba(38,38,31,0.06);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    font-family:'Nunito', sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle, var(--line) 1px, transparent 1.4px) 0 0/22px 22px,
+      var(--paper);
+    padding-bottom:60px;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Baloo 2', sans-serif;
+    margin:0;
+  }
+
+  .hand{ font-family:'Caveat', cursive; }
+
+  a{color:var(--green-dark);}
+
+  /* ---------- Scoreboard ---------- */
+  .scoreboard{
+    position:sticky; top:0; z-index:50;
+    background:var(--green-dark);
+    color:#fff;
+    padding:10px 18px;
+    display:flex; align-items:center; gap:14px;
+    font-family:'Baloo 2', sans-serif;
+    font-size:clamp(13px,2.6vw,16px);
+    box-shadow:0 3px 10px rgba(0,0,0,0.15);
+  }
+  .scoreboard .van-icon{ flex:0 0 auto; }
+  .scoreboard .track{
+    flex:1;
+    height:10px;
+    background:rgba(255,255,255,0.22);
+    border-radius:8px;
+    overflow:hidden;
+    position:relative;
+  }
+  .scoreboard .fill{
+    height:100%;
+    width:0%;
+    background:var(--yellow);
+    border-radius:8px;
+    transition:width .5s ease;
+  }
+  .scoreboard .count{ white-space:nowrap; font-weight:700; }
+
+  /* ---------- Header ---------- */
+  header.hero{
+    background:var(--green);
+    color:#fff;
+    padding:44px 24px 70px;
+    position:relative;
+    overflow:hidden;
+  }
+  header.hero::after{
+    content:"";
+    position:absolute; left:0; right:0; bottom:0; height:22px;
+    background:var(--paper);
+    clip-path:polygon(0% 100%,0% 30%,3% 90%,6% 20%,9% 85%,12% 25%,15% 90%,18% 15%,21% 80%,24% 30%,27% 90%,30% 20%,33% 85%,36% 15%,39% 90%,42% 25%,45% 80%,48% 20%,51% 90%,54% 15%,57% 85%,60% 25%,63% 90%,66% 15%,69% 85%,72% 20%,75% 90%,78% 25%,81% 85%,84% 15%,87% 90%,90% 20%,93% 85%,96% 25%,100% 90%,100% 100%);
+  }
+  .hero-inner{
+    max-width:980px; margin:0 auto; position:relative; z-index:2;
+    display:flex; flex-wrap:wrap; gap:28px; align-items:center;
+  }
+  .hero-text{ flex:1 1 320px; }
+  .eyebrow{
+    display:inline-block;
+    background:var(--yellow);
+    color:var(--green-dark);
+    font-family:'Baloo 2';
+    font-weight:700;
+    font-size:13px;
+    letter-spacing:.04em;
+    padding:5px 12px;
+    border-radius:20px;
+    margin-bottom:14px;
+  }
+  .hero-text h1{
+    font-size:clamp(32px,6vw,52px);
+    line-height:1.02;
+    font-weight:800;
+  }
+  .hero-text p{
+    margin-top:14px;
+    font-size:clamp(15px,2vw,18px);
+    max-width:44ch;
+    color:#EAF3EC;
+  }
+
+  /* ---------- Delivery demo ---------- */
+  .demo-card{
+    flex:1 1 340px;
+    background:var(--card);
+    color:var(--ink);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:22px 22px 26px;
+    position:relative;
+  }
+  .demo-label{
+    font-family:'Baloo 2'; font-weight:700; font-size:13px;
+    color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em;
+    margin-bottom:10px;
+  }
+  .demo-expr{
+    font-family:'Baloo 2'; font-weight:700;
+    font-size:clamp(28px,5vw,38px);
+    text-align:center;
+    position:relative;
+    padding:34px 6px 10px;
+    user-select:none;
+  }
+  .demo-expr .factor{ color:var(--coral); position:relative; }
+  .demo-expr .term1{ color:var(--blue); }
+  .demo-expr .term2{ color:var(--green-dark); }
+  .arrow-path{
+    position:absolute; top:0; left:0; width:100%; height:40px;
+    pointer-events:none;
+  }
+  .arrow-path path{
+    stroke:var(--coral);
+    stroke-width:2.5;
+    fill:none;
+    stroke-dasharray:120;
+    stroke-dashoffset:120;
+    transition:stroke-dashoffset .6s ease;
+  }
+  .demo-card.active .arrow-path path{ stroke-dashoffset:0; }
+  .demo-result{
+    text-align:center;
+    font-family:'Baloo 2'; font-weight:700;
+    font-size:clamp(24px,5vw,32px);
+    color:var(--green-dark);
+    opacity:0; transform:translateY(6px);
+    transition:opacity .4s ease .5s, transform .4s ease .5s;
+  }
+  .demo-card.active .demo-result{ opacity:1; transform:translateY(0); }
+  .deliver-btn{
+    display:block; margin:16px auto 0;
+    background:var(--green-dark); color:#fff; border:none;
+    font-family:'Baloo 2'; font-weight:700; font-size:15px;
+    padding:11px 26px; border-radius:30px; cursor:pointer;
+    box-shadow:0 3px 0 rgba(0,0,0,0.2);
+    transition:transform .15s ease;
+  }
+  .deliver-btn:hover{ transform:translateY(-2px); }
+  .deliver-btn:active{ transform:translateY(1px); }
+  .van-mini{ vertical-align:-4px; margin-right:6px; }
+
+  /* ---------- Sections ---------- */
+  main{ max-width:980px; margin:0 auto; padding:0 20px; }
+  section{ margin-top:54px; }
+
+  .section-head{
+    display:flex; align-items:baseline; gap:12px; margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .section-head .num{
+    font-family:'Baloo 2'; font-weight:800; font-size:15px;
+    color:#fff; background:var(--coral);
+    width:34px; height:34px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  .section-head h2{
+    font-size:clamp(22px,4vw,28px); color:var(--green-dark);
+  }
+  .section-sub{
+    color:var(--ink-soft); font-size:15px; max-width:62ch; margin:6px 0 0 46px;
+  }
+
+  /* ---------- Concept box ---------- */
+  .concept-box{
+    background:var(--paper-deep);
+    border:2px dashed var(--line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    display:flex; gap:26px; flex-wrap:wrap;
+  }
+  .concept-box .rule{ flex:1 1 260px; }
+  .concept-box .rule p{ margin:8px 0 0; color:var(--ink-soft); line-height:1.55; }
+  .sign-table{ flex:1 1 220px; border-collapse:collapse; font-family:'Baloo 2'; font-weight:700; }
+  .sign-table td{ padding:8px 14px; text-align:center; font-size:17px; }
+  .sign-table tr{ border-bottom:1px solid var(--line); }
+  .sign-table tr:last-child{ border-bottom:none; }
+  .sign-table .plus{ color:var(--correct); }
+  .sign-table .minus{ color:var(--error); }
+  .sign-table .eq{ color:var(--ink-soft); font-weight:400; font-family:'Nunito'; }
+
+  /* ---------- Warm-up ---------- */
+  .warmup-grid{ display:grid; gap:16px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); }
+  .warmup-card{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:18px 20px;
+  }
+  .warmup-card .expr{ font-family:'Baloo 2'; font-weight:700; font-size:22px; color:var(--green-dark); }
+  .steps-toggle{
+    margin-top:10px; background:none; border:1.5px solid var(--green);
+    color:var(--green-dark); font-family:'Baloo 2'; font-weight:700;
+    font-size:13px; padding:6px 14px; border-radius:20px; cursor:pointer;
+  }
+  .steps-toggle:hover{ background:var(--green-pale); }
+  .steps{
+    max-height:0; overflow:hidden; transition:max-height .35s ease;
+    margin-top:10px; font-size:14.5px; color:var(--ink-soft); line-height:1.7;
+  }
+  .steps.open{ max-height:220px; }
+  .steps .final{ color:var(--green-dark); font-weight:700; font-family:'Baloo 2'; }
+
+  /* ---------- Practice / Challenge cards ---------- */
+  .package-grid{ display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); }
+  .package{
+    background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:0; overflow:hidden; border:1px solid var(--line);
+  }
+  .package-tag{
+    background:var(--green); color:#fff; font-family:'Baloo 2'; font-weight:700;
+    font-size:12.5px; letter-spacing:.04em; padding:7px 16px; text-transform:uppercase;
+  }
+  .package-body{ padding:16px 18px 18px; }
+  .package .expr{ font-family:'Baloo 2'; font-weight:700; font-size:24px; margin-bottom:12px; }
+  .answer-row{ display:flex; gap:8px; }
+  .answer-row input{
+    flex:1; border:2px solid var(--line); border-radius:10px;
+    padding:9px 12px; font-family:'Nunito'; font-weight:700; font-size:15px;
+    color:var(--ink); background:var(--paper);
+  }
+  .answer-row input:focus{ outline:3px solid var(--yellow); border-color:var(--green); }
+  .check-btn{
+    background:var(--coral); color:#fff; border:none; border-radius:10px;
+    font-family:'Baloo 2'; font-weight:700; padding:0 16px; cursor:pointer;
+    font-size:14px;
+  }
+  .check-btn:hover{ background:#d94f28; }
+  .feedback{
+    margin-top:10px; font-size:14px; font-weight:700; min-height:20px;
+    display:flex; align-items:center; gap:6px;
+  }
+  .feedback.correct{ color:var(--correct); }
+  .feedback.wrong{ color:var(--error); }
+  .package.solved{ border-color:var(--correct); }
+  .package.solved .package-tag{ background:var(--correct); }
+
+  /* ---------- Answer key ---------- */
+  .key-toggle{
+    background:var(--green-dark); color:#fff; border:none; border-radius:30px;
+    font-family:'Baloo 2'; font-weight:700; padding:12px 26px; cursor:pointer;
+    font-size:15px; display:block; margin:0 auto;
+  }
+  .key-panel{
+    max-height:0; overflow:hidden; transition:max-height .5s ease;
+    margin-top:18px;
+  }
+  .key-panel.open{ max-height:900px; }
+  .key-list{
+    background:var(--paper-deep); border-radius:var(--radius); padding:20px 26px;
+    columns:2; column-gap:34px;
+  }
+  .key-list div{ break-inside:avoid; margin-bottom:10px; font-size:14.5px; }
+  .key-list b{ color:var(--green-dark); }
+
+  footer{
+    text-align:center; margin-top:64px; padding:0 20px;
+    color:var(--ink-soft); font-size:14px;
+  }
+  footer .hand{ font-size:22px; color:var(--green-dark); display:block; margin-bottom:6px; }
+
+  @media(max-width:640px){
+    .section-sub{ margin-left:0; }
+    .key-list{ columns:1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scoreboard">
+  <svg class="van-icon" width="30" height="20" viewBox="0 0 30 20" fill="none">
+    <rect x="1" y="6" width="18" height="9" rx="1.5" fill="#FFC845"/>
+    <path d="M19 9h5.5L28 12.5V15h-9V9z" fill="#FFC845"/>
+    <circle cx="7" cy="16" r="2.6" fill="#26261F" stroke="#fff" stroke-width="1"/>
+    <circle cx="23" cy="16" r="2.6" fill="#26261F" stroke="#fff" stroke-width="1"/>
+    <rect x="20.5" y="10" width="4" height="3.2" fill="#EAF3EC"/>
+  </svg>
+  <div class="track"><div class="fill" id="scoreFill"></div></div>
+  <div class="count" id="scoreCount">Delivered: 0 / 10</div>
+</div>
+
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <span class="eyebrow">GRADE 7 · ALGEBRA</span>
+      <h1>Expand &amp; Deliver</h1>
+      <p>A bracket is a sealed package. The number outside is the courier — it has to visit <em>every</em> term inside and multiply it before the job is done. Ready to run the route?</p>
+    </div>
+
+    <div class="demo-card" id="demoCard">
+      <div class="demo-label">Try the delivery</div>
+      <div class="demo-expr">
+        <svg class="arrow-path" viewBox="0 0 260 40" preserveAspectRatio="none">
+          <path d="M40 34 C 60 4, 90 4, 108 34" id="arrow1"/>
+          <path d="M40 34 C 90 -2, 150 -2, 172 34" id="arrow2"/>
+        </svg>
+        <span class="factor">5</span>( <span class="term1">x</span> + <span class="term2">3</span> )
+      </div>
+      <div class="demo-result">= 5x + 15</div>
+      <button class="deliver-btn" id="deliverBtn">
+        <svg class="van-mini" width="20" height="14" viewBox="0 0 30 20" fill="none">
+          <rect x="1" y="6" width="18" height="9" rx="1.5" fill="#fff"/>
+          <path d="M19 9h5.5L28 12.5V15h-9V9z" fill="#fff"/>
+          <circle cx="7" cy="16" r="2.4" fill="#1D4A32" stroke="#fff" stroke-width="1"/>
+          <circle cx="23" cy="16" r="2.4" fill="#1D4A32" stroke="#fff" stroke-width="1"/>
+        </svg>
+        Deliver the 5!
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- CONCEPT -->
+  <section id="concept">
+    <div class="section-head"><div class="num">1</div><h2>The Delivery Rule</h2></div>
+    <p class="section-sub">Multiply the outside number by <b>every single term</b> inside the brackets — nobody gets skipped. Watch the signs closely; they travel with the delivery.</p>
+    <div class="concept-box">
+      <div class="rule">
+        <h3 class="display" style="font-size:18px;color:var(--green-dark)">a(b + c) = ab + ac</h3>
+        <p>The courier <b>a</b> knocks on both doors: it multiplies <b>b</b>, then it multiplies <b>c</b>. Two separate deliveries, one trip.</p>
+        <p>If <b>a</b> is negative, both deliveries flip sign — that's the part most people forget to check.</p>
+      </div>
+      <table class="sign-table">
+        <tr><td class="plus">+</td><td class="eq">×</td><td class="plus">+</td><td class="eq">=</td><td class="plus">+</td></tr>
+        <tr><td class="plus">+</td><td class="eq">×</td><td class="minus">−</td><td class="eq">=</td><td class="minus">−</td></tr>
+        <tr><td class="minus">−</td><td class="eq">×</td><td class="plus">+</td><td class="eq">=</td><td class="minus">−</td></tr>
+        <tr><td class="minus">−</td><td class="eq">×</td><td class="minus">−</td><td class="eq">=</td><td class="plus">+</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <!-- WARM UP -->
+  <section id="warmup">
+    <div class="section-head"><div class="num">2</div><h2>Warm-Up Route</h2></div>
+    <p class="section-sub">Three guided packages. Try each one in your head or on paper, then tap to check the delivery steps.</p>
+    <div class="warmup-grid">
+
+      <div class="warmup-card">
+        <div class="expr">3(x + 4)</div>
+        <button class="steps-toggle">Peek at the steps</button>
+        <div class="steps">
+          3 × x = 3x<br>
+          3 × 4 = 12<br>
+          <span class="final">Answer: 3x + 12</span>
+        </div>
+      </div>
+
+      <div class="warmup-card">
+        <div class="expr">5(y − 2)</div>
+        <button class="steps-toggle">Peek at the steps</button>
+        <div class="steps">
+          5 × y = 5y<br>
+          5 × (−2) = −10<br>
+          <span class="final">Answer: 5y − 10</span>
+        </div>
+      </div>
+
+      <div class="warmup-card">
+        <div class="expr">2(3x + 1)</div>
+        <button class="steps-toggle">Peek at the steps</button>
+        <div class="steps">
+          2 × 3x = 6x<br>
+          2 × 1 = 2<br>
+          <span class="final">Answer: 6x + 2</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PRACTICE -->
+  <section id="practice">
+    <div class="section-head"><div class="num">3</div><h2>Practice Route</h2></div>
+    <p class="section-sub">Expand each package and type your answer — any order of terms is fine, the van checks the maths, not the layout.</p>
+    <div class="package-grid" id="practiceGrid">
+      <!-- filled by JS -->
+    </div>
+  </section>
+
+  <!-- CHALLENGE -->
+  <section id="challenge">
+    <div class="section-head"><div class="num">4</div><h2>Challenge Delivery</h2></div>
+    <p class="section-sub">Two brackets, one route. Expand both, then collect the like terms before you park the van.</p>
+    <div class="package-grid" id="challengeGrid">
+      <!-- filled by JS -->
+    </div>
+  </section>
+
+  <!-- ANSWER KEY -->
+  <section id="key">
+    <div class="section-head"><div class="num">5</div><h2>Depot Log (Answer Key)</h2></div>
+    <p class="section-sub">For teachers and self-checking — every answer, all at once.</p>
+    <button class="key-toggle" id="keyToggle">Open the depot log</button>
+    <div class="key-panel" id="keyPanel">
+      <div class="key-list" id="keyList"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="hand">Nice route — see you next delivery!</span>
+  Expand &amp; Deliver · Grade 7 Algebra · Expanding Brackets
+</footer>
+
+<script>
+  // ---------- data ----------
+  const practiceItems = [
+    { expr: "4(x + 5)",   answer: "4x+20" },
+    { expr: "6(y − 3)",   answer: "6y-18" },
+    { expr: "3(2x + 7)",  answer: "6x+21" },
+    { expr: "5(3y − 4)",  answer: "15y-20" },
+    { expr: "−2(x + 6)",  answer: "-2x-12" },
+    { expr: "7(4 − x)",   answer: "28-7x" },
+  ];
+
+  const challengeItems = [
+    { expr: "3(x + 2) + 4(x + 1)", answer: "7x+10" },
+    { expr: "−4(2x − 3)",          answer: "-8x+12" },
+    { expr: "5(x − 2) − 2(x + 3)", answer: "3x-16" },
+    { expr: "2(3x + 5) − (x − 4)", answer: "5x+14" },
+  ];
+
+  const total = practiceItems.length + challengeItems.length;
+  const solved = new Set();
+
+  function updateScore(){
+    const pct = Math.round((solved.size / total) * 100);
+    document.getElementById('scoreFill').style.width = pct + '%';
+    document.getElementById('scoreCount').textContent = `Delivered: ${solved.size} / ${total}`;
+  }
+
+  // ---------- expression equivalence checker ----------
+  function toEvaluable(str){
+    let e = str.toLowerCase().replace(/\s+/g,'').replace(/−/g,'-').replace(/–/g,'-');
+    e = e.replace(/\^/g,'**');
+    e = e.replace(/(\d)(x)/g,'$1*$2');   // 3x -> 3*x
+    e = e.replace(/\)\(/g,')*(');        // )( -> )*(
+    e = e.replace(/(\d)\(/g,'$1*(');     // 4( -> 4*(
+    e = e.replace(/x\(/g,'x*(');
+    return e;
+  }
+  function evalExpr(str, xVal){
+    let e = toEvaluable(str).split('x').join(`(${xVal})`);
+    if(!/^[0-9+\-*/().]+$/.test(e)) return NaN;
+    try{ return Function('"use strict";return (' + e + ')')(); }catch(err){ return NaN; }
+  }
+  function isEquivalent(userInput, correct){
+    if(!userInput || !userInput.trim()) return false;
+    const testVals = [2, -3, 5.5];
+    for(const v of testVals){
+      const a = evalExpr(userInput, v);
+      const b = evalExpr(correct, v);
+      if(Number.isNaN(a) || Number.isNaN(b) || Math.abs(a - b) > 1e-6) return false;
+    }
+    return true;
+  }
+
+  // ---------- build package cards ----------
+  function buildGrid(containerId, items, idPrefix){
+    const container = document.getElementById(containerId);
+    items.forEach((item, i) => {
+      const id = idPrefix + i;
+      const card = document.createElement('div');
+      card.className = 'package';
+      card.id = 'pkg-' + id;
+      card.innerHTML = `
+        <div class="package-tag">Package #${i+1}</div>
+        <div class="package-body">
+          <div class="expr">${item.expr}</div>
+          <div class="answer-row">
+            <input type="text" placeholder="e.g. 3x+12" data-id="${id}" data-answer="${item.answer}" aria-label="Answer for ${item.expr}">
+            <button class="check-btn" data-id="${id}">Check</button>
+          </div>
+          <div class="feedback" id="fb-${id}"></div>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  }
+  buildGrid('practiceGrid', practiceItems, 'p');
+  buildGrid('challengeGrid', challengeItems, 'c');
+
+  function checkOne(id){
+    const input = document.querySelector(`input[data-id="${id}"]`);
+    const fb = document.getElementById('fb-' + id);
+    const card = document.getElementById('pkg-' + id);
+    const correct = input.getAttribute('data-answer');
+    const ok = isEquivalent(input.value, correct);
+    if(ok){
+      fb.className = 'feedback correct';
+      fb.textContent = '✓ Delivered! Nice expanding.';
+      card.classList.add('solved');
+      solved.add(id);
+    }else{
+      fb.className = 'feedback wrong';
+      fb.textContent = input.value.trim() ? '✕ Not quite — recheck your signs.' : '✕ Type an answer first.';
+    }
+    updateScore();
+  }
+
+  document.addEventListener('click', (e) => {
+    if(e.target.classList.contains('check-btn')){
+      checkOne(e.target.getAttribute('data-id'));
+    }
+    if(e.target.classList.contains('steps-toggle')){
+      const steps = e.target.nextElementSibling;
+      steps.classList.toggle('open');
+      e.target.textContent = steps.classList.contains('open') ? 'Hide the steps' : 'Peek at the steps';
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' && e.target.tagName === 'INPUT' && e.target.dataset.id){
+      checkOne(e.target.dataset.id);
+    }
+  });
+
+  // ---------- hero demo ----------
+  document.getElementById('deliverBtn').addEventListener('click', () => {
+    document.getElementById('demoCard').classList.toggle('active');
+  });
+
+  // ---------- answer key ----------
+  const keyList = document.getElementById('keyList');
+  [...practiceItems, ...challengeItems].forEach((item, i) => {
+    const label = i < practiceItems.length ? `Practice #${i+1}` : `Challenge #${i - practiceItems.length + 1}`;
+    const div = document.createElement('div');
+    div.innerHTML = `<b>${label}:</b> ${item.expr} = ${item.answer.replace(/-/g,' − ').replace(/\+/g,' + ')}`;
+    keyList.appendChild(div);
+  });
+  document.getElementById('keyToggle').addEventListener('click', function(){
+    const panel = document.getElementById('keyPanel');
+    panel.classList.toggle('open');
+    this.textContent = panel.classList.contains('open') ? 'Close the depot log' : 'Open the depot log';
+  });
+
+  updateScore();
+</script>
+
+</body>
+</html>
